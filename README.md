@@ -5,7 +5,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ## Komutlar
 
 1) npm install
-2) nodemon fileread.js
+2) nodemon server.js
 3) http-server pdfler --cors
 4) ng serve --open
 
