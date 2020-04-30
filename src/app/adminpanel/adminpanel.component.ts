@@ -48,7 +48,6 @@ export class AdminpanelComponent implements OnInit {
 
     function PdfValidator(control: AbstractControl): { [key: string]: boolean } | null {
       if (control.value.type != "application/pdf") {
-
         return { 'selectedFile': true };
       }
       return null;
