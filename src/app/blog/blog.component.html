@@ -1,14 +1,16 @@
-<div class="container-fluid mt-5">
-    <div class="row justify-content-center">
-        <div class="col-8 col-sm-5 col-md-4 col-lg-4 col-xl-2 text-center pdfarticles ">
-            <div class="list-group mt-1 " *ngFor="let article of articles">
-                <a class="list-group-item list-group-item-dark {{article.id}}" style="  word-break: break-all;"
-                    (mouseover)="selectOver(article.id)" (mouseout)="selectOut(article.id)"
-                    (click)=show(article)>{{article.title}}</a>
-            </div>
-        </div>
+<div *ngIf="articles.length>0; else noArticle">
 
-    
+    <div class="container-fluid mt-5">
+        <div class="row justify-content-center">
+            <div class="col-8 col-sm-5 col-md-4 col-lg-4 col-xl-2 text-center pdfarticles ">
+                <div class="list-group mt-1 " *ngFor="let article of articles">
+                    <a class="list-group-item list-group-item-dark {{article.id}}" style="  word-break: break-all;"
+                        (mouseover)="selectOver(article.id)" (mouseout)="selectOut(article.id)"
+                        (click)=show(article)>{{article.title}}</a>
+                </div>
+            </div>
+
+
 
             <div class="col-11 col-sm-7 col-md-8 col-lg-8 col-xl-10 mr-5 mr-sm-0 text-center">
                 <div *ngIf="!pdfSrc; else baki">
@@ -25,7 +27,7 @@
                     </div>
                 </ng-template>
                 <div *ngIf="!pdfSrc">
-                
+
                     <div class="card ml-5 mt-2 text-center" style=" width: 18rem;display: inline-block;"
                         *ngFor="let article of articles | pdfFilter:filterText">
 
@@ -34,17 +36,25 @@
                                 (mouseover)="selectOver(article.id)" (mouseout)="selectOut(article.id)">
                                 {{article.title}}</h5>
                             <p class="card-text">{{article.explanation}}</p>
-                        </div>  
+                        </div>
 
                         <!-- <div class="card-body" >
                         <a  class="card-link" (click)=show(article) ></a>
                     </div> -->
                     </div>
-           
+
                 </div>
             </div>
+        </div>
+
+        <a class="mbtn" (click)=reset()>Anasayfa</a>
+
     </div>
-
-    <a class="mbtn" (click)=reset()>Anasayfa</a>
-
 </div>
+
+<ng-template #noArticle>
+
+    <h1 >
+        ŞU ANDA SAYFADA MAKALE EKLİ DEGİLDİR.
+    </h1>
+</ng-template>

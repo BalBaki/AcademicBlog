@@ -21,7 +21,7 @@ export class BlogComponent implements OnInit {
   ) { }
 
   filterText = "";
-  articles: Pdf[];
+  articles: Pdf[] = [];
   pdfSrc = "";
   fileName = "";
 
