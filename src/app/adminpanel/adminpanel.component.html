@@ -125,7 +125,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" (click)="changeFileUpload()" >Dosyayı Degistir</button>
+        <button type="button" class="btn btn-primary" [disabled] = "!file" (click)="changeFileUpload()" >Dosyayı Degistir</button>
       </div>
     </div>
   </div>

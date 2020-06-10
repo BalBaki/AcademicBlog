@@ -6,9 +6,10 @@ var ArticleModule = require('./models/article')
 var sequelize = new Sequelize('AcademicBlog','baki','123456789',{
     dialect : 'mssql',
     host: 'localhost',
-    define:{
-        timestamps: false // zamanları kapatır.
-    }
+    timezone : '+03:00'
+        // define:{
+        //     timestamps: false // zamanları kapatır.
+        // }
   });
   
   //Db Connection Test

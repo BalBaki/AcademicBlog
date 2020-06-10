@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AbstractType } from '@angular/core';
 import { Pdf } from '../blog/pdf';
 import { FileService } from '../services/file.service';
 import { Router } from '@angular/router';
@@ -6,7 +6,7 @@ import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/fo
 import { AlertifyService } from '../services/alertify.service';
 import { AccountService } from '../services/account.service';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
- import sweetAlert from 'SweetAlert';
+import sweetAlert from 'SweetAlert';
 
 
 declare var $: any;
@@ -81,10 +81,12 @@ export class AdminpanelComponent implements OnInit {
     }
   }
 
+ file : any;
+
   newFileOnFileChange(event) {
     if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      $('#newSelectedFile').value = file
+      this.file = event.target.files[0];
+      $('#newSelectedFile').value = this.file
     }
   }
 
@@ -97,15 +99,15 @@ export class AdminpanelComponent implements OnInit {
     var updatingFileName = this.form.get('selectedFile').value.name
     if (this.articles.find(x => x.fileName == updatingFileName))
       // this.alertifyService.error("Bu dosya mevcuttur.")
-      sweetAlert("Bu dosya mevcuttur.!", "" ,"error");
+      sweetAlert("Bu dosya mevcuttur.!", "", "error");
     else if (this.articles.find(x => x.title == this.form.get('title').value))
       this.alertifyService.error("Aynı başlıkta dosya eklenemez.")
     else {
       this.fileService.uploadFile(formData).subscribe(data => {
         if (data.status == 200 && data.response == 'success') {
-          sweetAlert("Makale başarıyla eklendi!", "" ,"success");
+          sweetAlert("Makale başarıyla eklendi!", "", "success");
           this.ngOnInit();
-        } 
+        }
       })
     }
 
@@ -115,7 +117,7 @@ export class AdminpanelComponent implements OnInit {
   getFileData() {
     this.fileService.getFiles().subscribe(data => {
       console.log(data);
-      this.articles = data.body.length  > 0  && data.status == 200 ? data.body : []
+      this.articles = data.body.length > 0 && data.status == 200 ? data.body : []
     })
   }
 
@@ -125,19 +127,19 @@ export class AdminpanelComponent implements OnInit {
     sweetAlert({
       title: "Makaleyi silmek istediginizden emin misin?",
       icon: "warning",
-      buttons: ["Iptal",true],
+      buttons: ["Iptal", true],
       dangerMode: true,
     })
-    .then((willDelete) => {
-      if (willDelete) {
-        sweetAlert("Makale silindi.!", {
-          icon: "success",
-        });
-        this.fileService.deleteFile(className).subscribe(data => {
-          this.ngOnInit();
-        })
-      }
-    });
+      .then((willDelete) => {
+        if (willDelete) {
+          sweetAlert("Makale silindi.!", {
+            icon: "success",
+          });
+          this.fileService.deleteFile(className).subscribe(data => {
+            this.ngOnInit();
+          })
+        }
+      });
 
   }
 
@@ -158,9 +160,9 @@ export class AdminpanelComponent implements OnInit {
     this.updateForm.get('fileName').setValue(article.fileName.substring(0, article.fileName.indexOf('.')))
   }
 
-  updateArticle() { 
+  updateArticle() {
     this.newArticle.id = this.article.id
-    this.newArticle.title = this.updateForm.get('title').value; 
+    this.newArticle.title = this.updateForm.get('title').value;
     this.newArticle.explanation = this.updateForm.get('explanation').value;
     this.newArticle.fileName = this.updateForm.get('fileName').value + '.pdf';
 
@@ -170,10 +172,10 @@ export class AdminpanelComponent implements OnInit {
       this.alertifyService.error("Aynı başlık mevcuttur.")
     else {
       this.fileService.updateArticle(this.newArticle).subscribe(data => {
-        if (data.success) {      
-          sweetAlert("Makale başarıyla güncellendi!", "" ,"success");
-          this.alertifyService.success("updated.."); 
-          $('#editModal').modal('hide') 
+        if (data.success) {
+          sweetAlert("Makale başarıyla güncellendi!", "", "success");
+          this.alertifyService.success("updated..");
+          $('#editModal').modal('hide')
           this.ngOnInit();
         }
         else
@@ -186,23 +188,26 @@ export class AdminpanelComponent implements OnInit {
     this.article = article;
   }
 
-  changeFileUpload() {
 
-    if (this.articles.find(x => x.fileName == $('#newSelectedFile')[0].files[0].name && x.id != this.article.id))
-      this.alertifyService.error("Bu dosya mevcuttur.")
-    else {
-      const formData = new FormData();
-      formData.append('file', $('#newSelectedFile')[0].files[0]);
-      this.fileService.changeFile(this.article.id, formData).subscribe(data => {
-        if (data.response) {
-          this.alertifyService.success("Dosya Degistirildi.");
-          this.ngOnInit();
-          $('#changeFileModal').modal('hide') 
-        }
-        else
-          this.alertifyService.error("Hata ! . Dosya degisirilemedi . " + data.err)
-      })
-    }
+  changeFileUpload() {
+   
+      if (this.articles.find(x => x.fileName == $('#newSelectedFile')[0].files[0].name && x.id != this.article.id))
+        this.alertifyService.error("Bu dosya mevcuttur.")
+      else {
+        const formData = new FormData();
+        formData.append('file', $('#newSelectedFile')[0].files[0]);
+        this.fileService.changeFile(this.article.id, formData).subscribe(data => {
+          if (data.response) {
+            this.alertifyService.success("Dosya Degistirildi.");
+            this.ngOnInit();
+            $('#changeFileModal').modal('hide')
+          }
+          else
+            this.alertifyService.error("Hata ! . Dosya degisirilemedi . " + data.err)
+        })
+      }
+
+      
 
   }
 
