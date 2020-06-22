@@ -62,7 +62,6 @@ app.get('/article/:id', function (request, response) {
   })
 })
 
-
 //Save new article
 app.post('/article', function (request, response) {
   Article.findOrCreate({
@@ -80,13 +79,14 @@ app.post('/article', function (request, response) {
     sampleFile.mv(uploadPath, function (err) {
       if (err)
         return response.status(500).send(err);
+      else
+        response.json({
+        status: "200",
+        responseType: "string",
+        response: "success"
+      });
     });
 
-    response.json({
-      status: "200",
-      responseType: "string",
-      response: "success"
-    });
   }).catch(err => {
     response.json({
       status: "500",
@@ -123,26 +123,33 @@ app.delete('/deleteArcticle/:id', function (request, response) {
 
 //update article details
 app.put('/changeArticle/:id', function (request, response) {
+
+  let oldFileName ;
+  
+  Article.findOne({
+    where: { id: request.params.id }
+  }).then(article => {
+    oldFileName = article.fileName;
+  })
+
   Article.update({
     title: request.body.title,
     fileName: request.body.fileName,
     explanation: request.body.explanation
   },
     {
-      where: { id: request.params.id }
+      where: { id: request.params.id },
     }).then(result => {
-      response.status(200).json({ success: "true" })
+      fs.rename(folder + oldFileName, folder + request.body.fileName, function (err) {
+        if (err) 
+          console.log(err);
+         else 
+          response.status(200).json({ success: "true" });
+      })
     }).catch(err => {
       response.status(500).json({ success: "false" })
     })
 
-  Article.findOne({
-    where: { id: request.params.id }
-  }).then(article => {
-    fs.rename(folder + article.fileName, folder + request.body.fileName, function (err) {
-      if (err) console.log(err);
-    })
-  })
 })
 
 //change article file
