@@ -2,18 +2,18 @@
 
     <div class="container-fluid mt-5">
         <div class="row justify-content-center">
-            <div class="col-8 col-sm-5 col-md-4 col-lg-4 col-xl-2 text-center pdfarticles ">
+            <div class="col-12 col-sm-9 col-md-4 col-lg-4 col-xl-2  text-center pdfarticles ">
                 <div class="list-group mt-1 " *ngFor="let article of articles">
                     <a class="list-group-item list-group-item-dark {{article.id}}" style="  word-break: break-all;"
                         (mouseover)="selectOver(article.id)" (mouseout)="selectOut(article.id)"
                         (click)=show(article)>{{article.title}}</a>
                 </div>
             </div>
+            
 
 
-
-            <div class="col-11 col-sm-7 col-md-8 col-lg-8 col-xl-10 mr-5 mr-sm-0 text-center">
-                <div *ngIf="!pdfSrc; else baki">
+            <div class="col-12 col-sm-9 col-md-8 col-lg-8 col-xl-10  mt-1 mr-sm-0 text-center">
+                <div *ngIf="!pdfSrc; else baki" >
                     <!-- <h1>Bloguma Hosgeldiniz.</h1> -->
                     <input class="form-control pt-4 pb-4 " type="search"
                         placeholder="Aramak istediginiz döküman ismini giriniz." [(ngModel)]="filterText">
@@ -23,12 +23,12 @@
                         <button (click)=previousPdf()>Geri</button>
                         <button (click)=reset()>Kapat</button>
                         <button (click)=nextPdf()>İleri</button>
-                        <pdf-viewer [src]="pdfSrc" [render-text]="true"></pdf-viewer>
+                        <pdf-viewer [src]="pdfSrc" [render-text]="true" [autoresize]="true"  [original-size]="false"  ></pdf-viewer>
                     </div>
                 </ng-template>
                 <div *ngIf="!pdfSrc">
 
-                    <div class="card ml-5 mt-2 text-center" style=" width: 18rem;display: inline-block;"
+                    <div class="card  mt-2 ml-4 mr-4 text-center" style=" width: 18rem;display: inline-block;"
                         *ngFor="let article of articles | pdfFilter:filterText">
 
                         <div class="card-body">

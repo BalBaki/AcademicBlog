@@ -103,7 +103,7 @@ export class AdminpanelComponent implements OnInit {
     else if (this.articles.find(x => x.title == this.form.get('title').value))
       this.alertifyService.error("Aynı başlıkta dosya eklenemez.")
     else {
-      this.fileService.uploadFile(formData).subscribe(data => {
+      this.fileService.uploadArticle(formData).subscribe(data => {
         if (data.status == 200 && data.response == 'success') {
           sweetAlert("Makale başarıyla eklendi!", "", "success");
           this.ngOnInit();
@@ -116,7 +116,7 @@ export class AdminpanelComponent implements OnInit {
 
   getFileData() {
     this.fileService.getFiles().subscribe(data => {
-      console.log(data);
+      console.log(data.body);
       this.articles = data.body.length > 0 && data.status == 200 ? data.body : []
     })
   }

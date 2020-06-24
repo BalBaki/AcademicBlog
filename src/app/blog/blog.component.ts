@@ -29,6 +29,7 @@ export class BlogComponent implements OnInit {
   ngOnInit() {
     this.fileService.getFiles().subscribe(data => {
       this.articles = data.body;
+      
     })
 
   }

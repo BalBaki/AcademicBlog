@@ -14,6 +14,13 @@ export class FileService {
 
   path = "http://localhost:3000/"
 
+  headers : HttpHeaders = new HttpHeaders({
+    'Content-Type': 'application/json',
+  });
+  
+
+
+
   getFiles(): Observable<HttpResponse<Pdf[]>> {
     return this.http.get<Pdf[]>(this.path + 'articles',{observe: 'response'})
   }
@@ -23,7 +30,7 @@ export class FileService {
   }
 
 
-  uploadFile(file:any):Observable<any>{
+  uploadArticle(file:any):Observable<any>{
     return this.http.post<any>(this.path + 'article',file)
   }
 

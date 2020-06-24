@@ -48,7 +48,7 @@ const folder = './pdfler/';
 //Get all Articles
 app.get('/articles', function (request, response) {
   Article.findAll().then((articles) => {
-    articles.sort((a,b)=> a.createdAt - b.createdAt ? -1 : 1)
+    articles.sort((a,b)=> (a.createdAt > b.createdAt) ? -1 : (b.createdAt > a.createdAt) ? 1 : 0)
     response.status(200).json(articles.length > 0 ? articles : []);
   })
 })
