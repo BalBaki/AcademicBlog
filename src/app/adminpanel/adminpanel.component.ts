@@ -132,11 +132,11 @@ export class AdminpanelComponent implements OnInit {
     })
       .then((willDelete) => {
         if (willDelete) {
-          sweetAlert("Makale silindi.!", {
-            icon: "success",
-          });
           this.fileService.deleteFile(className).subscribe(data => {
             this.ngOnInit();
+            sweetAlert("Makale silindi.!", {
+              icon: "success",
+            });
           })
         }
       });
