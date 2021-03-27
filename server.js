@@ -45,7 +45,7 @@ const folder = './pdfler/';
 
 
 
-//Get all Articles
+//Get all Articlessssssssssssss
 app.get('/articles', function (request, response) {
   Article.findAll().then((articles) => {
     articles.sort((a,b)=> (a.createdAt > b.createdAt) ? -1 : (b.createdAt > a.createdAt) ? 1 : 0)
