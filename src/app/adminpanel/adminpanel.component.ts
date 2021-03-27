@@ -6,7 +6,7 @@ import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/fo
 import { AlertifyService } from '../services/alertify.service';
 import { AccountService } from '../services/account.service';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
-import sweetAlert from 'SweetAlert';
+import sweetAlert from 'sweetalert';
 
 
 declare var $: any;
